@@ -1,0 +1,18 @@
+[package]
+name = "tf-preview"
+version = "0.1.0"
+authors = ["Andriy Symonovych <sima.rv@gmail.com>"]
+
+[dependencies]
+iron = "*"
+persistent = "*"
+router = "*"
+hyper = "*"
+hyper-native-tls = "*"
+serde = "*"
+serde_derive = "*"
+serde_json = "*"
+params = "*"
+
+[dependencies.select]
+git = "https://github.com/utkarshkukreti/select.rs"
