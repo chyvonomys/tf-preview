@@ -126,6 +126,37 @@ fn build_preview(url: &str) -> OgPreviewRes {
     }
 }
 
+#[test]
+fn test_build_preview() {
+    let resp1 = build_preview("http://github.com");
+    println!("resp 1: {:#?}", resp1);
+    assert_eq!(match resp1 {
+        OgPreviewRes{
+            ok: true,
+            title: Some(_),
+            image: Some(_),
+            ref images,
+            description: Some(_),
+            cached: Some(false),
+        } if images.len() > 0 => true,
+        _ => false,
+    }, true);
+
+    let resp2 = build_preview("bruh");
+    println!("resp 2: {:#?}", resp2);
+    assert_eq!(match resp2 {
+        OgPreviewRes{
+            ok: false,
+            title: None,
+            image: None,
+            ref images,
+            description: None,
+            cached: None,
+        } if images.len() == 0 => true,
+        _ => false,
+    }, true);
+}
+
 fn preview(req: &mut Request) -> IronResult<Response> {
     let arc_st_r = req.get::<persistent::State<LinkCache>>();
     let ps = req.get_ref::<params::Params>().unwrap();
